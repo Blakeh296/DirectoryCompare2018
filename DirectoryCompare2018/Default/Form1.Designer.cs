@@ -48,6 +48,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnClear = new System.Windows.Forms.Button();
+            this.btnSaveResults = new System.Windows.Forms.Button();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -55,7 +57,7 @@
             // 
             // btnPrimaryDir
             // 
-            this.btnPrimaryDir.Location = new System.Drawing.Point(619, 53);
+            this.btnPrimaryDir.Location = new System.Drawing.Point(546, 53);
             this.btnPrimaryDir.Name = "btnPrimaryDir";
             this.btnPrimaryDir.Size = new System.Drawing.Size(34, 23);
             this.btnPrimaryDir.TabIndex = 2;
@@ -65,7 +67,7 @@
             // 
             // btnSecondDir
             // 
-            this.btnSecondDir.Location = new System.Drawing.Point(619, 96);
+            this.btnSecondDir.Location = new System.Drawing.Point(546, 96);
             this.btnSecondDir.Name = "btnSecondDir";
             this.btnSecondDir.Size = new System.Drawing.Size(34, 23);
             this.btnSecondDir.TabIndex = 3;
@@ -76,7 +78,7 @@
             // btnCompare
             // 
             this.btnCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompare.Location = new System.Drawing.Point(553, 125);
+            this.btnCompare.Location = new System.Drawing.Point(480, 125);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(100, 32);
             this.btnCompare.TabIndex = 4;
@@ -87,7 +89,8 @@
             // rtbOutPut
             // 
             this.rtbOutPut.BackColor = System.Drawing.SystemColors.Control;
-            this.rtbOutPut.Location = new System.Drawing.Point(85, 163);
+            this.rtbOutPut.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbOutPut.Location = new System.Drawing.Point(12, 163);
             this.rtbOutPut.Name = "rtbOutPut";
             this.rtbOutPut.Size = new System.Drawing.Size(568, 151);
             this.rtbOutPut.TabIndex = 5;
@@ -95,14 +98,14 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(85, 53);
+            this.textBox1.Location = new System.Drawing.Point(12, 53);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(528, 20);
             this.textBox1.TabIndex = 7;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(85, 98);
+            this.textBox2.Location = new System.Drawing.Point(12, 98);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(528, 20);
             this.textBox2.TabIndex = 8;
@@ -113,7 +116,7 @@
             this.MainMenu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(898, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -136,7 +139,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(85, 34);
+            this.label1.Location = new System.Drawing.Point(12, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 16);
             this.label1.TabIndex = 10;
@@ -146,7 +149,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(85, 79);
+            this.label2.Location = new System.Drawing.Point(12, 79);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(131, 16);
             this.label2.TabIndex = 11;
@@ -155,7 +158,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(85, 144);
+            this.label3.Location = new System.Drawing.Point(12, 144);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 12;
@@ -170,9 +173,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 353);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(898, 22);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip2";
             // 
@@ -190,7 +193,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(577, 321);
+            this.btnClear.Location = new System.Drawing.Point(504, 321);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 14;
@@ -198,11 +201,30 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // btnSaveResults
+            // 
+            this.btnSaveResults.Location = new System.Drawing.Point(12, 321);
+            this.btnSaveResults.Name = "btnSaveResults";
+            this.btnSaveResults.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveResults.TabIndex = 15;
+            this.btnSaveResults.Text = "Save";
+            this.btnSaveResults.UseVisualStyleBackColor = true;
+            this.btnSaveResults.Click += new System.EventHandler(this.SaveOutput);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(595, 96);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(291, 218);
+            this.treeView1.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(898, 375);
+            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.btnSaveResults);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
@@ -218,6 +240,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
@@ -248,6 +271,8 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnSaveResults;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 

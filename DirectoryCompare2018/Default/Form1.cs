@@ -24,7 +24,64 @@ namespace Default
             InitializeComponent();
         }
 
-    
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Get a list of all drivers
+            string[] drivers = Environment.GetLogicalDrives();
+
+            foreach (string drive in drivers)
+            {
+                DriveInfo di = new DriveInfo(drive);
+
+                TreeNode node = new TreeNode(drive.Substring(0, 1));
+                node.Tag = drive;
+
+                if (di.IsReady == true)
+                {
+                    node.Nodes.Add("...");
+                }
+            }
+        }
+
+        private void dirsTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node.Nodes.Count > 0)
+            {
+                if (e.Node.Nodes[0].Text == "..." && e.Node.Nodes[0].Tag == null)
+                {
+                    e.Node.Nodes.Clear();
+
+                    //get the list of subdirectories
+                    string[] dirs = Directory.GetDirectories(e.Node.Tag.ToString());
+
+                    foreach (string dir in dirs)
+                    {
+                        DirectoryInfo di = new DirectoryInfo(dir);
+                        TreeNode node = new TreeNode(di.Name, 0, 1);
+
+                        try
+                        {
+                            //keep the directory's full path in the tag for use later
+                            node.Tag = dir;
+
+                            //if the directory has subdirectories add the place holder
+                            if (di.GetDirectories().Count() > 0)
+                            {
+                                node.Nodes.Add(null, "...", 0, 0);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "DirectoryLister", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            e.Node.Nodes.Add(node);
+                        }
+                    }
+                }
+            }
+        }
 
         private string  DirectoryNotice(string altDirectory, string folderName)
          {
@@ -254,6 +311,27 @@ namespace Default
             }
         }
 
+        private void SaveOutput(object sender, EventArgs e)
+        {
+            try
+            {
+               if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (saveFileDialog.CheckFileExists)
+                    {
+                        rtbOutPut.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
+                        toolStripStatusLabel1.Text = "File saved to " + saveFileDialog.FileName + ".";
+                    }
+                    else
+                        MessageBox.Show("That location does not exist. Please select a valid directory in which to save the file.", "Error saving the file ...");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error ...", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             // Clear the output field and status bar
@@ -263,5 +341,7 @@ namespace Default
             toolStripStatusLabel1.Text = "";
             toolStripStatusLabel2.Text = "";
         }
+
+        
     }
 }
