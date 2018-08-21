@@ -40,10 +40,12 @@ namespace Default
                 {
                     node.Nodes.Add("...");
                 }
+
+                treeView1.Nodes.Add(node);
             }
         }
 
-        private void dirsTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        private void TreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             if (e.Node.Nodes.Count > 0)
             {
