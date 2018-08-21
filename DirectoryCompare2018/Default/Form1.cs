@@ -45,45 +45,6 @@ namespace Default
             }
         }
 
-        private void TreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node.Nodes.Count > 0)
-            {
-                if (e.Node.Nodes[0].Text == "..." && e.Node.Nodes[0].Tag == null)
-                {
-                    e.Node.Nodes.Clear();
-
-                    //get the list of subdirectories
-                    string[] dirs = Directory.GetDirectories(e.Node.Tag.ToString());
-
-                    foreach (string dir in dirs)
-                    {
-                        DirectoryInfo di = new DirectoryInfo(dir);
-                        TreeNode node = new TreeNode(di.Name, 0, 1);
-
-                        try
-                        {
-                            //keep the directory's full path in the tag for use later
-                            node.Tag = dir;
-
-                            //if the directory has subdirectories add the place holder
-                            if (di.GetDirectories().Count() > 0)
-                            {
-                                node.Nodes.Add(null, "...", 0, 0);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, "DirectoryLister", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            e.Node.Nodes.Add(node);
-                        }
-                    }
-                }
-            }
-        }
 
         private string  DirectoryNotice(string altDirectory, string folderName)
          {
@@ -344,6 +305,49 @@ namespace Default
             toolStripStatusLabel2.Text = "";
         }
 
-        
+        private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node.Nodes.Count > 0)
+            {
+                if (e.Node.Nodes[0].Text == "..." && e.Node.Nodes[0].Tag == null)
+                {
+                    e.Node.Nodes.Clear();
+
+                    //get the list of subdirectories
+                    string[] dirs = Directory.GetDirectories(e.Node.Tag.ToString());
+
+                    foreach (string dir in dirs)
+                    {
+                        DirectoryInfo di = new DirectoryInfo(dir);
+                        TreeNode node = new TreeNode(di.Name, 0, 1);
+
+                        try
+                        {
+                            //keep the directory's full path in the tag for use later
+                            node.Tag = dir;
+
+                            //if the directory has subdirectories add the place holder
+                            if (di.GetDirectories().Count() > 0)
+                            {
+                                node.Nodes.Add(null, "...", 0, 0);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "DirectoryLister", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            e.Node.Nodes.Add(node);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            textBox1.Text = treeView1.SelectedNode.FullPath.ToString();
+        }
     }
 }
