@@ -93,7 +93,9 @@ namespace Default
             // Validate Directory Inputs
             try
             {
-                bool directory1Pass = false, bool directory2Pass = false, bool returnValue = false;
+                bool directory1Pass = false;
+                bool directory2Pass = false;
+                bool returnValue = false;
 
                 //Check for missing directory entries and directories that dont exist
 
@@ -250,6 +252,16 @@ namespace Default
             {
                 MessageBox.Show(ex.Message, "Error ...", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            // Clear the output field and status bar
+            rtbOutPut.Text = "";
+            rtbOutPut.BackColor = Color.FromName("Control");
+            rtbOutPut.ForeColor = Color.Black;
+            toolStripStatusLabel1.Text = "";
+            toolStripStatusLabel2.Text = "";
         }
     }
 }

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.btnPrimaryDir = new System.Windows.Forms.Button();
             this.btnSecondDir = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCompare = new System.Windows.Forms.Button();
             this.rtbOutPut = new System.Windows.Forms.RichTextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
@@ -39,14 +39,15 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MainMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnClear = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -60,6 +61,7 @@
             this.btnPrimaryDir.TabIndex = 2;
             this.btnPrimaryDir.Text = "...";
             this.btnPrimaryDir.UseVisualStyleBackColor = true;
+            this.btnPrimaryDir.Click += new System.EventHandler(this.FolderSearch);
             // 
             // btnSecondDir
             // 
@@ -69,16 +71,18 @@
             this.btnSecondDir.TabIndex = 3;
             this.btnSecondDir.Text = "...";
             this.btnSecondDir.UseVisualStyleBackColor = true;
+            this.btnSecondDir.Click += new System.EventHandler(this.FolderSearch);
             // 
-            // button1
+            // btnCompare
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(553, 125);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 32);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Compare";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCompare.Location = new System.Drawing.Point(553, 125);
+            this.btnCompare.Name = "btnCompare";
+            this.btnCompare.Size = new System.Drawing.Size(100, 32);
+            this.btnCompare.TabIndex = 4;
+            this.btnCompare.Text = "Compare";
+            this.btnCompare.UseVisualStyleBackColor = true;
+            this.btnCompare.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
             // 
             // rtbOutPut
             // 
@@ -121,6 +125,13 @@
             this.MainMenu.Size = new System.Drawing.Size(35, 20);
             this.MainMenu.Text = "File";
             // 
+            // compareToolStripMenuItem
+            // 
+            this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
+            this.compareToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.compareToolStripMenuItem.Text = "Compare";
+            this.compareToolStripMenuItem.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -150,13 +161,6 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Results:";
             // 
-            // compareToolStripMenuItem
-            // 
-            this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
-            this.compareToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.compareToolStripMenuItem.Text = "Compare";
-            this.compareToolStripMenuItem.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
-            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
@@ -184,11 +188,22 @@
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(109, 17);
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(577, 321);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 14;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -197,7 +212,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.rtbOutPut);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCompare);
             this.Controls.Add(this.btnSecondDir);
             this.Controls.Add(this.btnPrimaryDir);
             this.MainMenuStrip = this.menuStrip1;
@@ -216,7 +231,7 @@
         #endregion
         private System.Windows.Forms.Button btnPrimaryDir;
         private System.Windows.Forms.Button btnSecondDir;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCompare;
         private System.Windows.Forms.RichTextBox rtbOutPut;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
@@ -232,6 +247,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 
