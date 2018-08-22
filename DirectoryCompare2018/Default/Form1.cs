@@ -41,7 +41,7 @@ namespace Default
                     node.Nodes.Add("...");
                 }
 
-                treeView1.Nodes.Add(node);
+                tvFilesView.Nodes.Add(node);
             }
         }
 
@@ -175,51 +175,66 @@ namespace Default
 
         private void CompareDirectories(string DirectoryPath)
         {
+            //Get the number of files and subdirectories under this path
             int nbrFiles = Directory.GetFiles(DirectoryPath).Count();
             int nbrFolders = Directory.GetDirectories(DirectoryPath).Count();
-            string comparisonFile;
-            string fileNameOnly, altDirectory;
+            //Get the corresponding directory
+            string correspondPath = dirCompare + DirectoryPath.Substring(dirPrimary.Length);
+            string comparisonFile, fileNameOnly;
 
             try
             {
-                if (nbrFiles > 0)
+                // Add the directories to the TreeView if they're not already there
+                AddDirectorytoTreeView(DirectoryPath);
+                AddDirectorytoTreeView(correspondPath);
+            if (Directory.Exists(correspondPath))
                 {
-                    foreach (string fileName in Directory.GetFiles(DirectoryPath))
+                    if (nbrFiles > 0)
                     {
-                        // Increment the file count
-                        fileCount += 1;
-                        // Determine the filepath / name of corresponding file ...
-                        comparisonFile = dirCompare + fileName.Substring(dirPrimary.Length);
-                        if(!System.IO.File.Exists(comparisonFile))
+                        foreach (string fileName in Directory.GetFiles(DirectoryPath))
                         {
+                            // Increment the file count
+                            fileCount += 1;
+                            // Determine the filepath / name of corresponding file ...
                             fileNameOnly = Path.GetFileName(fileName);
-                            altDirectory = comparisonFile.Substring(0, comparisonFile.Length - fileNameOnly.Length);
-                            rtbOutPut.Text += FileNotice(fileNameOnly, DirectoryPath, altDirectory);
-                            itemsFound = true;
+                            comparisonFile = dirCompare + fileName.Substring(dirPrimary.Length);
+                            if (!System.IO.File.Exists(comparisonFile))
+                            {
+                                dGVoutPut.Rows.Add(FileNotice(fileNameOnly, DirectoryPath, correspondPath));
+                                UpdateTreeViewStatus(correspondPath, Color.Orange, "Missing files");
+                                itemsFound = true;
+                            }
                         }
                     }
-                }
 
-                if (nbrFolders > 0)
-                {
-                    foreach (string folderName in Directory.GetDirectories(DirectoryPath))
+                    if (nbrFolders > 0)
                     {
-                        toolStripStatusLabel2.Text = "Reading " + folderName;
-                        altDirectory = dirCompare + folderName.Substring(dirPrimary.Length);
-                        // Use Recursion to check subdirectories if they exist.
-                        if (Directory.Exists(altDirectory))
+                        foreach (string folderName in Directory.GetDirectories(DirectoryPath))
                         {
-                            CompareDirectories(folderName);
+                            toolStripStatusLabel2.Text = "Reading " + folderName;
+                            // Use Recursion to check subdirectories if they exist.
+                            if (Directory.Exists(correspondPath))
+                            {
+                                CompareDirectories(folderName);
+                            }
+                            else
+                            {
+                                //If the corresponding directory doesnt exist. add all necessary information to the results
+                                dGVoutPut.Rows.Add(DirectoryNotice(correspondPath, folderName));
+                                UpdateTreeViewStatus(folderName, Color.Red, "Missing Corresponding Folder");
+                                itemsFound = true;
+                            }
+                            Application.DoEvents();
                         }
-                        else
-                        {
-                            //If the corresponding directory doesnt exist. add all necessary information to the results
-                            rtbOutPut.Text += DirectoryNotice(altDirectory, folderName);
-                            itemsFound = true;
-                        }
-                        Application.DoEvents();
                     }
                 }
+            else
+                {
+                    //If the corresponding path doesn't exist, just record the one entry
+                    dGVoutPut.Rows.Add(DirectoryNotice(correspondPath, DirectoryPath));
+                    UpdateTreeViewStatus(correspondPath, Color.Red, "Missing Folder");
+                }
+                
             }
             catch(Exception ex)
             {
@@ -227,13 +242,79 @@ namespace Default
             }
         }
 
+        private void AddDirectorytoTreeView(string DirectoryPath)
+        {
+            // Add a specific directory pertaining to the two directories picked
+            DirectoryInfo currentDirectory = new DirectoryInfo(DirectoryPath);
+            string parentPath = "";
+
+            try
+            {
+                // Get the parent directory if needed
+                if (DirectoryPath.Contains("\\"))
+                    parentPath = DirectoryPath.Substring(0, DirectoryPath.LastIndexOf("\\"));
+
+                TreeNode[] findNode = tvFilesView.Nodes.Find(DirectoryPath, true);
+                TreeNode[] parentNodeFind = tvFilesView.Nodes.Find(parentPath, true);
+
+                //Look for the directory and its parent to place it in the TreeView
+                //If its already there do nothing
+
+                if (findNode.Length == 0)
+                {
+                    if (parentNodeFind.Length > 0)
+                    {
+                        //If the parent has been found, insert the new Directory
+                        parentNodeFind[0].Nodes.Add(DirectoryPath, currentDirectory.Name);
+                    }
+                    else
+                    {
+                        //otherwise, add it as a new top level
+                        tvFilesView.Nodes.Add(DirectoryPath, currentDirectory.Name);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void UpdateTreeViewStatus(string DirectoryPath, Color colorCode, string ToolTipMessage)
+        {
+            TreeNode[] nodeFind = tvFilesView.Nodes.Find(DirectoryPath, true);
+            TreeNode foundNode;
+
+            try
+            {
+                // Change the appearance of the specified tree node.
+                if (nodeFind.Length > 0)
+                {
+                    foundNode = nodeFind[0];
+                    foundNode.BackColor = colorCode;
+                    foundNode.ForeColor = Color.White;
+                    foundNode.ToolTipText = ToolTipMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private void compareToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rtbOutPut.Text = "";
+            //Compare the two directories to each other and report on the findings
+
             itemsFound = false;
 
             try
             {
+                //Reset the display.
+                InitializeGridColumns();
+                dGVoutPut.Rows.Clear();
+                tvFilesView.Nodes.Clear();
+
                 if(ValidateInputs())
                 {
                     // Validate the  directories before moving forward
@@ -242,28 +323,34 @@ namespace Default
 
                     //Reset the file count
                     // Reset rtbOutput Colors
-                    rtbOutPut.BackColor = Color.FromName("Control");
-                    rtbOutPut.ForeColor = Color.Black;
+                    dGVoutPut.BackColor = Color.FromName("Control");
+                    dGVoutPut.ForeColor = Color.Black;
                     fileCount = 0;
+                    statusStrip1.Text = "Comparing secondary directory to primary.";
+                    CompareDirectories(dirPrimary);
+
+                    //Switch the directories and compare them in the opposite direction
                     statusStrip1.Text = "Comparing primary directory to secondary.";
                     dirPrimary = textBox2.Text;
                     dirCompare = textBox1.Text;
-                    CompareDirectories(dirPrimary);
-                    // After comparison is finished, report
-                    toolStripStatusLabel1.Text = fileCount.ToString() + " files tested.";
-                    if (!itemsFound && rtbOutPut.Text.Length == 0)
+
+                    //After comparison is finished, report
+                    statusStrip1.Text = fileCount.ToString() + " files tested.";
+                    if (!itemsFound && dGVoutPut.Rows.Count == 1)
                     {
-                        rtbOutPut.Text += "All files match!";
-                        rtbOutPut.BackColor = Color.Green;
-                        rtbOutPut.ForeColor = Color.White;
+                        tbOutPut.Text += "All files match!";
+                        tbOutPut.BackColor = Color.Green;
+                        tbOutPut.ForeColor = Color.White;
                         toolStripStatusLabel2.Text = "All files and folders match.";
+                        errorProvider.Clear();
                     }
                     else
                     {
-                        rtbOutPut.Text += "Files / Folders missing!";
-                        rtbOutPut.BackColor = Color.Red;
-                        rtbOutPut.ForeColor = Color.White;
+                        tbOutPut.Text += "Files / Folders missing!";
+                        tbOutPut.BackColor = Color.Red;
+                        tbOutPut.ForeColor = Color.White;
                         toolStripStatusLabel2.Text = "File / Folder mismatch.";
+                        errorProvider.Clear();
                     }
                     
                 }
@@ -282,7 +369,7 @@ namespace Default
                 {
                     if (saveFileDialog.CheckFileExists)
                     {
-                        rtbOutPut.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
+                        //dGVoutPut.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
                         toolStripStatusLabel1.Text = "File saved to " + saveFileDialog.FileName + ".";
                     }
                     else
@@ -298,11 +385,30 @@ namespace Default
         private void btnClear_Click(object sender, EventArgs e)
         {
             // Clear the output field and status bar
-            rtbOutPut.Text = "";
-            rtbOutPut.BackColor = Color.FromName("Control");
-            rtbOutPut.ForeColor = Color.Black;
+            dGVoutPut.Rows.Clear();
+            tvFilesView.Nodes.Clear();
             toolStripStatusLabel1.Text = "";
             toolStripStatusLabel2.Text = "";
+            tbOutPut.Text = "";
+            tbOutPut.BackColor = Color.FromName("Menu");
+            errorProvider.Clear();
+        }
+
+        private void InitializeGridColumns()
+        {
+            try
+            {
+                if (dGVoutPut.Columns.Count == 0)
+                {
+                    dGVoutPut.Columns.Add("Type", "Type");
+                    dGVoutPut.Columns.Add("Name", "Item Name");
+                    dGVoutPut.Columns.Add("Description", "Description");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -345,9 +451,102 @@ namespace Default
             }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void rbPrimaryDir_CheckedChanged(object sender, EventArgs e)
         {
-            textBox1.Text = treeView1.SelectedNode.FullPath.ToString();
+            btnAddFilePath.Text = "Pick Primary Path";
+        }
+
+        private void rbSecondaryDir_CheckedChanged(object sender, EventArgs e)
+        {
+            btnAddFilePath.Text = "Pick Secondary Path";
+        }
+
+        private void btnAddFilePath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (rbPrimaryDir.Checked)
+                {
+                    tvFilesView.SelectedNode.BackColor = Color.Blue;
+                    tvFilesView.SelectedNode.ForeColor = Color.White;
+
+                    if (tvFilesView.SelectedNode.PrevNode != null && tvFilesView.SelectedNode.PrevNode.BackColor != Color.Green)
+                    {
+                        tvFilesView.SelectedNode.PrevNode.BackColor = Color.White;
+                        tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;
+                    }
+
+                    string Path1 = tvFilesView.SelectedNode.FullPath.ToString();
+                    Path1 = Path1.Insert(1, ":");
+                    textBox1.Text = Path1;
+                }
+                else if (rbSecondaryDir.Checked)
+                {
+                    tvFilesView.SelectedNode.BackColor = Color.Green;
+                    tvFilesView.SelectedNode.ForeColor = Color.White;
+
+                    if (tvFilesView.SelectedNode.PrevNode != null && tvFilesView.SelectedNode.PrevNode.BackColor != Color.Blue)
+                    {
+                        tvFilesView.SelectedNode.PrevNode.BackColor = Color.White;
+                        tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;
+                    }
+
+                    string Path2 = tvFilesView.SelectedNode.FullPath.ToString();
+                    Path2 = Path2.Insert(1, ":");
+                    textBox2.Text = Path2;
+                }
+                else
+                {
+                    tbOutPut.Text = "Pick two Directories to begin!";
+                    errorProvider.SetError(rbPrimaryDir, "Select One");
+                    errorProvider.SetError(rbSecondaryDir, "Select One");
+                    errorProvider.SetError(btnPrimaryDir, "Select a Directory");
+                    errorProvider.SetError(btnSecondDir, "Select a Directory");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void expandAllToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                tvFilesView.ExpandAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void reloadDirectoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Get a list of all drivers
+            string[] drivers = Environment.GetLogicalDrives();
+
+            foreach (string drive in drivers)
+            {
+                DriveInfo di = new DriveInfo(drive);
+
+                TreeNode node = new TreeNode(drive.Substring(0, 1));
+                node.Tag = drive;
+
+                if (di.IsReady == true)
+                {
+                    node.Nodes.Add("...");
+                }
+
+                tvFilesView.Nodes.Add(node);
+            }
         }
     }
 }
