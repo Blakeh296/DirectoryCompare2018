@@ -43,6 +43,8 @@ namespace Default
 
                 tvFilesView.Nodes.Add(node);
             }
+
+            rbPrimaryDir.Checked = true;
         }
 
 
@@ -314,6 +316,7 @@ namespace Default
                 InitializeGridColumns();
                 dGVoutPut.Rows.Clear();
                 tvFilesView.Nodes.Clear();
+                tbOutPut.Text = "";
 
                 if(ValidateInputs())
                 {
@@ -363,17 +366,36 @@ namespace Default
 
         private void SaveOutput(object sender, EventArgs e)
         {
+            StreamWriter outPut;
             try
             {
+               // Prompt user for file location to save the text file of results
                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (saveFileDialog.CheckFileExists)
+                    //Verify Path Exists
+                    if (saveFileDialog.CheckPathExists)
                     {
-                        //dGVoutPut.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.RichText);
+                        outPut = new StreamWriter(saveFileDialog.FileName);
+
+                        //Output all rows from the results grid to the text file
+                        foreach (DataGridViewRow dgvRow in dGVoutPut.Rows)
+                        {
+                            foreach (DataGridViewCell dgvCell in dgvRow.Cells)
+                            {
+                                outPut.WriteLine(dgvCell.Value);
+                            }
+
+                            outPut.WriteLine("");
+                        }
+
+                        //Make sure everything is written and save
+                        outPut.Flush();
+                        outPut.Close();
+
                         toolStripStatusLabel1.Text = "File saved to " + saveFileDialog.FileName + ".";
                     }
                     else
-                        MessageBox.Show("That location does not exist. Please select a valid directory in which to save the file.", "Error saving the file ...");
+                        MessageBox.Show("That location doesn't exist. Please select a valid directory in which to save the file.", "Error saving the file ...");
                 }
             }
             catch (Exception ex)
@@ -470,7 +492,8 @@ namespace Default
                     tvFilesView.SelectedNode.BackColor = Color.Blue;
                     tvFilesView.SelectedNode.ForeColor = Color.White;
 
-                    if (tvFilesView.SelectedNode.PrevNode != null && tvFilesView.SelectedNode.PrevNode.BackColor != Color.Green)
+                    if (tvFilesView.SelectedNode.PrevNode != null || tvFilesView.SelectedNode.PrevNode.BackColor == Color.Green
+                        || tvFilesView.SelectedNode.PrevNode.BackColor == Color.Blue)
                     {
                         tvFilesView.SelectedNode.PrevNode.BackColor = Color.White;
                         tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;
@@ -485,7 +508,8 @@ namespace Default
                     tvFilesView.SelectedNode.BackColor = Color.Green;
                     tvFilesView.SelectedNode.ForeColor = Color.White;
 
-                    if (tvFilesView.SelectedNode.PrevNode != null && tvFilesView.SelectedNode.PrevNode.BackColor != Color.Blue)
+                    if (tvFilesView.SelectedNode.PrevNode != null || tvFilesView.SelectedNode.PrevNode.BackColor == Color.Blue
+                        || tvFilesView.SelectedNode.PrevNode.BackColor == Color.Green)
                     {
                         tvFilesView.SelectedNode.PrevNode.BackColor = Color.White;
                         tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;

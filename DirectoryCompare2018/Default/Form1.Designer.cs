@@ -41,10 +41,10 @@
             this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.directorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandAllToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -141,14 +141,14 @@
             // compareToolStripMenuItem
             // 
             this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
-            this.compareToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.compareToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.compareToolStripMenuItem.Text = "Compare";
             this.compareToolStripMenuItem.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // applicationToolStripMenuItem
@@ -160,35 +160,35 @@
             this.applicationToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.applicationToolStripMenuItem.Text = "Application";
             // 
-            // exitToolStripMenuItem1
-            // 
-            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
-            // 
             // directorySettingsToolStripMenuItem
             // 
             this.directorySettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.expandAllToolStripMenuItem2,
             this.reloadDirectoriesToolStripMenuItem});
             this.directorySettingsToolStripMenuItem.Name = "directorySettingsToolStripMenuItem";
-            this.directorySettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.directorySettingsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.directorySettingsToolStripMenuItem.Text = "File Directory Settings";
             // 
             // expandAllToolStripMenuItem2
             // 
             this.expandAllToolStripMenuItem2.Name = "expandAllToolStripMenuItem2";
-            this.expandAllToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.expandAllToolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
             this.expandAllToolStripMenuItem2.Text = "Expand All";
             this.expandAllToolStripMenuItem2.Click += new System.EventHandler(this.expandAllToolStripMenuItem2_Click);
             // 
             // reloadDirectoriesToolStripMenuItem
             // 
             this.reloadDirectoriesToolStripMenuItem.Name = "reloadDirectoriesToolStripMenuItem";
-            this.reloadDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.reloadDirectoriesToolStripMenuItem.Text = "Reload Directories";
             this.reloadDirectoriesToolStripMenuItem.Click += new System.EventHandler(this.reloadDirectoriesToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(179, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // label3
             // 
@@ -240,7 +240,7 @@
             // 
             this.btnSaveResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSaveResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveResults.Location = new System.Drawing.Point(12, 325);
+            this.btnSaveResults.Location = new System.Drawing.Point(15, 325);
             this.btnSaveResults.Name = "btnSaveResults";
             this.btnSaveResults.Size = new System.Drawing.Size(75, 23);
             this.btnSaveResults.TabIndex = 15;
@@ -274,10 +274,11 @@
             this.tbOutPut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbOutPut.BackColor = System.Drawing.SystemColors.Menu;
-            this.tbOutPut.Location = new System.Drawing.Point(36, 357);
+            this.tbOutPut.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbOutPut.Location = new System.Drawing.Point(15, 357);
             this.tbOutPut.Name = "tbOutPut";
             this.tbOutPut.ReadOnly = true;
-            this.tbOutPut.Size = new System.Drawing.Size(504, 20);
+            this.tbOutPut.Size = new System.Drawing.Size(565, 22);
             this.tbOutPut.TabIndex = 31;
             this.tbOutPut.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
