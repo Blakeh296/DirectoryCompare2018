@@ -45,6 +45,7 @@ namespace Default
             }
 
             rbPrimaryDir.Checked = true;
+            progressBar1.Visible = false;
         }
 
 
@@ -324,6 +325,20 @@ namespace Default
                     dirPrimary = textBox1.Text;
                     dirCompare = textBox2.Text;
 
+                    //Count all directories and subdirectories for the progress bar
+                    toolStripStatusLabel1.Text = "Getting count of all directories";
+                    Application.DoEvents(); //Force the application to display changing text
+                    int directoryCount = Directory.GetDirectories(dirPrimary, "*", SearchOption.AllDirectories).Count();
+                    toolStripStatusLabel1.Text = "Getting count of directories - One moment please ...";
+                    Application.DoEvents(); //Force the application to display changing text
+                    int compareDirCount = Directory.GetDirectories(dirCompare, "*", SearchOption.AllDirectories).Count();
+                    directoryCount += compareDirCount;
+
+                    //Initialize progress bar
+                    progressBar1.Maximum = directoryCount;
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = true;
+
                     //Reset the file count
                     // Reset rtbOutput Colors
                     dGVoutPut.BackColor = Color.FromName("Control");
@@ -336,6 +351,7 @@ namespace Default
                     statusStrip1.Text = "Comparing primary directory to secondary.";
                     dirPrimary = textBox2.Text;
                     dirCompare = textBox1.Text;
+                    CompareDirectories(dirPrimary);
 
                     //After comparison is finished, report
                     statusStrip1.Text = fileCount.ToString() + " files tested.";
@@ -344,6 +360,7 @@ namespace Default
                         tbOutPut.Text += "All files match!";
                         tbOutPut.BackColor = Color.Green;
                         tbOutPut.ForeColor = Color.White;
+                        toolStripStatusLabel1.Text = "Done! ";
                         toolStripStatusLabel2.Text = "All files and folders match.";
                         errorProvider.Clear();
                     }
@@ -352,10 +369,14 @@ namespace Default
                         tbOutPut.Text += "Files / Folders missing!";
                         tbOutPut.BackColor = Color.Red;
                         tbOutPut.ForeColor = Color.White;
+                        toolStripStatusLabel1.Text = "Done Directories do not match !";
                         toolStripStatusLabel2.Text = "File / Folder mismatch.";
                         errorProvider.Clear();
                     }
-                    
+
+                    progressBar1.Value = 0;
+                    progressBar1.Visible = false;
+
                 }
             }
             catch (Exception ex)
