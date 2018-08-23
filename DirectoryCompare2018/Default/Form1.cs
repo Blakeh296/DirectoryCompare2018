@@ -432,7 +432,7 @@ namespace Default
             tvFilesView.Nodes.Clear();
             toolStripStatusLabel1.Text = "";
             toolStripStatusLabel2.Text = "";
-            tbOutPut.Text = "";
+            tbOutPut.Text = "Reset Complete :)";
             tbOutPut.BackColor = Color.FromName("Menu");
             errorProvider.Clear();
         }
