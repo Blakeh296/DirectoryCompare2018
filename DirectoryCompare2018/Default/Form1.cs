@@ -44,8 +44,26 @@ namespace Default
                 tvFilesView.Nodes.Add(node);
             }
 
+            //Check the first radio button
             rbPrimaryDir.Checked = true;
+            //Hide the progressBar
             progressBar1.Visible = false;
+
+            // Change colors to display instructions to user
+            tbOutPut.BackColor = Color.Yellow;
+            tbOutPut.ForeColor = Color.Black;
+            //Instructions for user
+            tbOutPut.Text = "Click a Path from the 'Directory View' then click 'Pick Primary Path'";
+
+            //Visual representation of what to click
+            btnAddFilePath.BackColor = Color.Yellow;
+
+            //Visual demonstration of what to click
+            btnPrimaryDir.BackColor = Color.Yellow;
+
+            // Change Directory View Label
+            label2.ForeColor = Color.Black;
+            label2.BackColor = Color.Yellow;
         }
 
 
@@ -77,6 +95,10 @@ namespace Default
 
         private void FolderSearch(object sender, EventArgs e)
         {
+            btnAddFilePath.BackColor = Color.FromName("Control");
+            btnPrimaryDir.BackColor = Color.FromName("Control");
+            btnSecondDir.BackColor = Color.FromName("Control");
+
             // Show folder dialog so the user can select a directory
 
              Button btnPress = (sender as Button);
@@ -104,6 +126,32 @@ namespace Default
                      textBox2.Text = folderBrowser.SelectedPath;
                       }
                   }
+
+                string Path1 = textBox1.Text;
+                string Path2 = textBox2.Text;
+
+                if (Path1 == "")
+                {
+                    btnPrimaryDir.BackColor = Color.Yellow;
+                    tbOutPut.ForeColor = Color.Black;
+                    tbOutPut.BackColor = Color.Yellow;
+                    tbOutPut.Text = "Now choose Primary Directory";
+                }
+                else if (Path2 == "")
+                {
+                    btnSecondDir.BackColor = Color.Yellow;
+                    tbOutPut.ForeColor = Color.Black;
+                    tbOutPut.BackColor = Color.Yellow;
+                    tbOutPut.Text = "Now choose Secondary Directory";
+                }
+                else if (Path1 != "" && Path2 != "")
+                {
+                    btnCompare.BackColor = Color.Yellow;
+                    tbOutPut.ForeColor = Color.White;
+                    tbOutPut.BackColor = Color.Green;
+                    tbOutPut.Text = "Green Light to compare Files!";
+                }
+
            }    
           catch (Exception ex)
           {
@@ -376,12 +424,14 @@ namespace Default
 
                     progressBar1.Value = 0;
                     progressBar1.Visible = false;
+                    btnCompare.BackColor = Color.FromName("Control");
 
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error ...", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                btnCompare.BackColor = Color.FromName("Control");
             }
         }
 
@@ -496,20 +546,49 @@ namespace Default
 
         private void rbPrimaryDir_CheckedChanged(object sender, EventArgs e)
         {
+            btnSecondDir.BackColor = Color.FromName("Control");
+            btnPrimaryDir.BackColor = Color.Yellow;
+            btnAddFilePath.BackColor = Color.Yellow;
             btnAddFilePath.Text = "Pick Primary Path";
+
+            tbOutPut.BackColor = Color.Yellow;
+            tbOutPut.ForeColor = Color.Black;
+            tbOutPut.Text = "Click a Path from the 'Directory View' then click 'Pick Primary Path'";
         }
 
         private void rbSecondaryDir_CheckedChanged(object sender, EventArgs e)
         {
+            btnPrimaryDir.BackColor = Color.FromName("Control");
+            btnSecondDir.BackColor = Color.Yellow;
+            btnAddFilePath.BackColor = Color.Yellow;
             btnAddFilePath.Text = "Pick Secondary Path";
+
+            tbOutPut.BackColor = Color.Yellow;
+            tbOutPut.ForeColor = Color.Black;
+            tbOutPut.Text = "Click a Path from the 'Directory View' then click 'Pick Secondary Path'";
         }
 
         private void btnAddFilePath_Click(object sender, EventArgs e)
         {
             try
             {
+                btnPrimaryDir.BackColor = Color.FromName("Control");
+                btnSecondDir.BackColor = Color.FromName("Control");
+                btnAddFilePath.BackColor = Color.FromName("Control");
+                string Path1;
+                string Path2;
+                
+
                 if (rbPrimaryDir.Checked)
                 {
+                    if (textBox2.Text == "")
+                    {
+                        rbSecondaryDir.BackColor = Color.Yellow;
+                        btnSecondDir.BackColor = Color.Yellow;
+                    }
+
+                    rbPrimaryDir.BackColor = Color.FromName("Control");
+
                     tvFilesView.SelectedNode.BackColor = Color.Blue;
                     tvFilesView.SelectedNode.ForeColor = Color.White;
 
@@ -520,12 +599,22 @@ namespace Default
                         tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;
                     }
 
-                    string Path1 = tvFilesView.SelectedNode.FullPath.ToString();
+                    Path1 = tvFilesView.SelectedNode.FullPath.ToString();
                     Path1 = Path1.Insert(1, ":");
                     textBox1.Text = Path1;
                 }
                 else if (rbSecondaryDir.Checked)
                 {
+
+                    if (textBox1.Text == "")
+                    {
+                        rbPrimaryDir.BackColor = Color.Yellow;
+                        btnPrimaryDir.BackColor = Color.Yellow;
+                    }
+
+                    rbSecondaryDir.BackColor = Color.FromName("Control");
+
+                    rbSecondaryDir.BackColor = Color.Transparent;
                     tvFilesView.SelectedNode.BackColor = Color.Green;
                     tvFilesView.SelectedNode.ForeColor = Color.White;
 
@@ -536,7 +625,7 @@ namespace Default
                         tvFilesView.SelectedNode.PrevNode.ForeColor = Color.Black;
                     }
 
-                    string Path2 = tvFilesView.SelectedNode.FullPath.ToString();
+                    Path2 = tvFilesView.SelectedNode.FullPath.ToString();
                     Path2 = Path2.Insert(1, ":");
                     textBox2.Text = Path2;
                 }
@@ -547,6 +636,17 @@ namespace Default
                     errorProvider.SetError(rbSecondaryDir, "Select One");
                     errorProvider.SetError(btnPrimaryDir, "Select a Directory");
                     errorProvider.SetError(btnSecondDir, "Select a Directory");
+                }
+
+                Path1 = textBox1.Text;
+                Path2 = textBox2.Text;
+
+                if (Path1 != "" && Path2 != "")
+                {
+                    btnCompare.BackColor = Color.Yellow;
+                    tbOutPut.Text = "Green Light to compare Files !";
+                    tbOutPut.BackColor = Color.Green;
+                    tbOutPut.ForeColor = Color.White;
                 }
             }
             catch (Exception ex)
@@ -561,20 +661,12 @@ namespace Default
             Application.Exit();
         }
 
-        private void expandAllToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                tvFilesView.ExpandAll();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
 
         private void reloadDirectoriesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //Clear the TreeView 
+            tvFilesView.Nodes.Clear();
+
             //Get a list of all drivers
             string[] drivers = Environment.GetLogicalDrives();
 
@@ -591,6 +683,18 @@ namespace Default
                 }
 
                 tvFilesView.Nodes.Add(node);
+            }
+        }
+
+        private void expandAllDirectoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                tvFilesView.ExpandAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -42,7 +42,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.directorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.expandAllToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,6 +60,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.expandAllDirectoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -70,7 +70,7 @@
             // btnPrimaryDir
             // 
             this.btnPrimaryDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPrimaryDir.Location = new System.Drawing.Point(332, 93);
+            this.btnPrimaryDir.Location = new System.Drawing.Point(415, 93);
             this.btnPrimaryDir.Name = "btnPrimaryDir";
             this.btnPrimaryDir.Size = new System.Drawing.Size(34, 23);
             this.btnPrimaryDir.TabIndex = 2;
@@ -81,7 +81,7 @@
             // btnSecondDir
             // 
             this.btnSecondDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSecondDir.Location = new System.Drawing.Point(332, 142);
+            this.btnSecondDir.Location = new System.Drawing.Point(415, 142);
             this.btnSecondDir.Name = "btnSecondDir";
             this.btnSecondDir.Size = new System.Drawing.Size(34, 23);
             this.btnSecondDir.TabIndex = 3;
@@ -93,7 +93,7 @@
             // 
             this.btnCompare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompare.Location = new System.Drawing.Point(266, 171);
+            this.btnCompare.Location = new System.Drawing.Point(349, 171);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(100, 32);
             this.btnCompare.TabIndex = 4;
@@ -108,7 +108,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(9, 93);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(317, 20);
+            this.textBox1.Size = new System.Drawing.Size(400, 20);
             this.textBox1.TabIndex = 7;
             // 
             // textBox2
@@ -118,17 +118,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(9, 145);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(317, 20);
+            this.textBox2.Size = new System.Drawing.Size(400, 20);
             this.textBox2.TabIndex = 8;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenu,
-            this.applicationToolStripMenuItem});
+            this.applicationToolStripMenuItem,
+            this.expandAllDirectoriesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(687, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(770, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -166,30 +167,22 @@
             // directorySettingsToolStripMenuItem
             // 
             this.directorySettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.expandAllToolStripMenuItem2,
             this.reloadDirectoriesToolStripMenuItem});
             this.directorySettingsToolStripMenuItem.Name = "directorySettingsToolStripMenuItem";
-            this.directorySettingsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.directorySettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.directorySettingsToolStripMenuItem.Text = "File Directory Settings";
-            // 
-            // expandAllToolStripMenuItem2
-            // 
-            this.expandAllToolStripMenuItem2.Name = "expandAllToolStripMenuItem2";
-            this.expandAllToolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
-            this.expandAllToolStripMenuItem2.Text = "Expand All";
-            this.expandAllToolStripMenuItem2.Click += new System.EventHandler(this.expandAllToolStripMenuItem2_Click);
             // 
             // reloadDirectoriesToolStripMenuItem
             // 
             this.reloadDirectoriesToolStripMenuItem.Name = "reloadDirectoriesToolStripMenuItem";
-            this.reloadDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.reloadDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reloadDirectoriesToolStripMenuItem.Text = "Reload Directories";
             this.reloadDirectoriesToolStripMenuItem.Click += new System.EventHandler(this.reloadDirectoriesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(179, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -211,9 +204,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 434);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 464);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(687, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(770, 22);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip2";
             // 
@@ -231,7 +224,7 @@
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(290, 375);
+            this.btnClear.Location = new System.Drawing.Point(373, 405);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 14;
@@ -243,7 +236,7 @@
             // 
             this.btnSaveResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSaveResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveResults.Location = new System.Drawing.Point(12, 375);
+            this.btnSaveResults.Location = new System.Drawing.Point(12, 405);
             this.btnSaveResults.Name = "btnSaveResults";
             this.btnSaveResults.Size = new System.Drawing.Size(75, 23);
             this.btnSaveResults.TabIndex = 15;
@@ -255,9 +248,9 @@
             // 
             this.tvFilesView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tvFilesView.Location = new System.Drawing.Point(384, 67);
+            this.tvFilesView.Location = new System.Drawing.Point(467, 67);
             this.tvFilesView.Name = "tvFilesView";
-            this.tvFilesView.Size = new System.Drawing.Size(291, 331);
+            this.tvFilesView.Size = new System.Drawing.Size(291, 361);
             this.tvFilesView.TabIndex = 16;
             this.tvFilesView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeExpand);
             // 
@@ -269,7 +262,7 @@
             this.dGVoutPut.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVoutPut.Location = new System.Drawing.Point(12, 209);
             this.dGVoutPut.Name = "dGVoutPut";
-            this.dGVoutPut.Size = new System.Drawing.Size(354, 160);
+            this.dGVoutPut.Size = new System.Drawing.Size(437, 190);
             this.dGVoutPut.TabIndex = 17;
             // 
             // tbOutPut
@@ -278,10 +271,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbOutPut.BackColor = System.Drawing.SystemColors.Menu;
             this.tbOutPut.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbOutPut.Location = new System.Drawing.Point(9, 405);
+            this.tbOutPut.Location = new System.Drawing.Point(9, 435);
             this.tbOutPut.Name = "tbOutPut";
             this.tbOutPut.ReadOnly = true;
-            this.tbOutPut.Size = new System.Drawing.Size(357, 22);
+            this.tbOutPut.Size = new System.Drawing.Size(440, 22);
             this.tbOutPut.TabIndex = 31;
             this.tbOutPut.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -315,9 +308,9 @@
             // 
             this.btnAddFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddFilePath.Location = new System.Drawing.Point(414, 404);
+            this.btnAddFilePath.Location = new System.Drawing.Point(479, 434);
             this.btnAddFilePath.Name = "btnAddFilePath";
-            this.btnAddFilePath.Size = new System.Drawing.Size(238, 23);
+            this.btnAddFilePath.Size = new System.Drawing.Size(268, 23);
             this.btnAddFilePath.TabIndex = 34;
             this.btnAddFilePath.Text = "Pick Path";
             this.btnAddFilePath.UseVisualStyleBackColor = true;
@@ -327,9 +320,9 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(93, 375);
+            this.progressBar1.Location = new System.Drawing.Point(93, 405);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(192, 24);
+            this.progressBar1.Size = new System.Drawing.Size(275, 24);
             this.progressBar1.TabIndex = 35;
             // 
             // label1
@@ -349,17 +342,25 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(381, 47);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(464, 45);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 13);
+            this.label2.Size = new System.Drawing.Size(97, 16);
             this.label2.TabIndex = 37;
             this.label2.Text = "Directory View:";
+            // 
+            // expandAllDirectoriesToolStripMenuItem
+            // 
+            this.expandAllDirectoriesToolStripMenuItem.Name = "expandAllDirectoriesToolStripMenuItem";
+            this.expandAllDirectoriesToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+            this.expandAllDirectoriesToolStripMenuItem.Text = "Expand All Directories";
+            this.expandAllDirectoriesToolStripMenuItem.Click += new System.EventHandler(this.expandAllDirectoriesToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 456);
+            this.ClientSize = new System.Drawing.Size(770, 486);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnCompare);
             this.Controls.Add(this.progressBar1);
@@ -423,11 +424,11 @@
         private System.Windows.Forms.ToolStripMenuItem applicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem directorySettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem expandAllToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem reloadDirectoriesToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem expandAllDirectoriesToolStripMenuItem;
     }
 }
 
